@@ -1,0 +1,151 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 thumb
+    2 00000000         
+    3 00000000                 AREA             MONCODE, CODE, READONLY
+    4 00000000                 extern           fanion
+    5 00000000                 EXPORT           timer_callback
+    6 00000000         
+    7 00000000         
+    8 00000000 40010C10 
+                       GPIOB_BSRR
+                               equ              0x40010C10  ; Bit Set/Reset reg
+                                                            ister
+    9 00000000         
+   10 00000000         
+   11 00000000         
+   12 00000000         
+   13 00000000         ; ro contient l'adresse du fanion
+   14 00000000         ; r1 contient la valeur 2
+   15 00000000         ; r2 contient la valeur du fanion
+   16 00000000         ; r3 contient l'adresse du registre GPIOB_BSRR
+   17 00000000         
+   18 00000000         timer_callback
+                               PROC
+   19 00000000 4809            ldr              r0, =fanion
+   20 00000002 6802            ldr              r2, [r0]    ; on met dans r2 ce
+                                                             que pointe r0 (val
+                                                            eur du fanion)
+   21 00000004         ;cmp r2, #0x00000000 ; on compare r2 et 0
+   22 00000004         ;beq mettreA1
+   23 00000004 B102            cbz              r2, mettreA1
+   24 00000006 B93A            cbnz             r2, mettreA0
+   25 00000008         
+   26 00000008         
+   27 00000008         ; mise a 1 de PB1
+   28 00000008         
+   29 00000008         mettreA1
+   30 00000008 4B08            ldr              r3, =GPIOB_BSRR
+   31 0000000A F04F 0102       mov              r1, #0x00000002
+   32 0000000E 6019            str              r1, [r3]
+   33 00000010         ; passons le fanion a 1
+   34 00000010 F04F 0201       mov              r2, #1
+   35 00000014 6002            str              r2, [r0]
+   36 00000016 4770            bx               lr
+   37 00000018         
+   38 00000018         
+   39 00000018         ; mise a zero de PB1
+   40 00000018         
+   41 00000018         mettreA0
+   42 00000018 4B04            ldr              r3, =GPIOB_BSRR
+   43 0000001A F44F 3100       mov              r1, #0x00020000
+   44 0000001E 6019            str              r1, [r3]
+   45 00000020 F04F 0200       mov              r2, #0x0
+   46 00000024 6002            str              r2, [r0]
+   47 00000026 4770            bx               lr
+   48 00000028         ; N.B. le registre BSRR est write-only, on ne peut pas l
+                       e relire
+   49 00000028         
+   50 00000028         
+   51 00000028                 ENDP
+   52 00000028                 END
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+              00000000 
+              40010C10 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\obj\generationdesignal.d -o.\obj\generationdesignal.o -I.\RTE\_S
+imu -IC:\Users\HP\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -I
+C:\Users\HP\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --p
+redefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION
+_VERSION SETA 529" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1"
+ --list=generationdesignal.lst generationDeSignal.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+MONCODE 00000000
+
+Symbol: MONCODE
+   Definitions
+      At line 3 in file generationDeSignal.s
+   Uses
+      None
+Comment: MONCODE unused
+mettreA0 00000018
+
+Symbol: mettreA0
+   Definitions
+      At line 41 in file generationDeSignal.s
+   Uses
+      At line 24 in file generationDeSignal.s
+Comment: mettreA0 used once
+mettreA1 00000008
+
+Symbol: mettreA1
+   Definitions
+      At line 29 in file generationDeSignal.s
+   Uses
+      At line 23 in file generationDeSignal.s
+Comment: mettreA1 used once
+timer_callback 00000000
+
+Symbol: timer_callback
+   Definitions
+      At line 18 in file generationDeSignal.s
+   Uses
+      At line 5 in file generationDeSignal.s
+Comment: timer_callback used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+GPIOB_BSRR 40010C10
+
+Symbol: GPIOB_BSRR
+   Definitions
+      At line 8 in file generationDeSignal.s
+   Uses
+      At line 30 in file generationDeSignal.s
+      At line 42 in file generationDeSignal.s
+
+1 symbol
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+fanion 00000000
+
+Symbol: fanion
+   Definitions
+      At line 4 in file generationDeSignal.s
+   Uses
+      At line 19 in file generationDeSignal.s
+Comment: fanion used once
+1 symbol
+343 symbols in table

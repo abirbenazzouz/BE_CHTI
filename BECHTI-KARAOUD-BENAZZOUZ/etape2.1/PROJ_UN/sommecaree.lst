@@ -1,0 +1,95 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 thumb
+    2 00000000         
+    3 00000000                 import           TabSin
+    4 00000000                 import           TabCos
+    5 00000000                 area             moncode, code, readonly
+    6 00000000         
+    7 00000000                 export           sommecarre
+    8 00000000         ; r0 correspond a l indice de l angle en entree
+    9 00000000         sommecarre
+                               PROC
+   10 00000000         ;on importe les adresses de tabsin et tabcos dans r1 et 
+                       r2
+   11 00000000 4906            ldr              r1, =TabCos
+   12 00000002 F931 1010       ldrsh            r1, [r1, r0, lsl #0x01] ; on ch
+                                                            arge dans r3 TabCos
+                                                            [r0] avec extension
+                                                             de signe
+   13 00000006         
+   14 00000006 4A06            ldr              r2, =TabSin
+   15 00000008 F932 2010       ldrsh            r2, [r2, r0, lsl #0x01] ; de me
+                                                            me pour les sin
+   16 0000000C         
+   17 0000000C FB81 4301       smull            r4, r3, r1, r1
+   18 00000010 FB82 6502       smull            r6, r5, r2, r2
+   19 00000014         
+   20 00000014 EB06 0004       add              r0, r6, r4  ;on met dans r0 le 
+                                                            resultat de la fonc
+                                                            tion
+   21 00000018 4770            bx               lr
+   22 0000001A         
+   23 0000001A                 ENDP
+   24 0000001A         
+   25 0000001A                 END
+              00 00 00000000 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\obj\sommecaree.d -o.\obj\sommecaree.o -I.\RTE\_Simu -IC:\Users\H
+P\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -IC:\Users\HP\AppD
+ata\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__EVAL
+ SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 52
+9" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --list=sommecar
+ee.lst sommeCaree.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+moncode 00000000
+
+Symbol: moncode
+   Definitions
+      At line 5 in file sommeCaree.s
+   Uses
+      None
+Comment: moncode unused
+sommecarre 00000000
+
+Symbol: sommecarre
+   Definitions
+      At line 9 in file sommeCaree.s
+   Uses
+      At line 7 in file sommeCaree.s
+Comment: sommecarre used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+TabCos 00000000
+
+Symbol: TabCos
+   Definitions
+      At line 4 in file sommeCaree.s
+   Uses
+      At line 11 in file sommeCaree.s
+Comment: TabCos used once
+TabSin 00000000
+
+Symbol: TabSin
+   Definitions
+      At line 3 in file sommeCaree.s
+   Uses
+      At line 14 in file sommeCaree.s
+Comment: TabSin used once
+2 symbols
+341 symbols in table
